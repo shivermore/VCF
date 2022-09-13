@@ -1,0 +1,17 @@
+1. connect host to management systems if applicable (UCS, iDRAC, etc.) assign 1 nic as management
+2. install updated version of ESXi
+3. Open all VCF vlans into management system
+4. Get all hosts in a healthy state
+5. Configure password, network settings to include IP and DNS (1 NIC only) and disable IPv6
+7. Once system restarts open web console to that assigned IP
+8. Storage
+  8a. check for second flash card.  If present create partition to make disk ineligible for vSAN.  Name partition FlashCard-Prime and Spare
+9. Networking
+  9a. change VM Network to same as management
+  9b. select vSwitch 0 and set MTO to 9000
+  9c. select vmk0 from that page edit setting MTU to 9000
+  9d. select the default TCP/IP stack and ensure the routing has the management info
+10. Select management for the host
+  10a. time date edit ntp - use ntp client ... set for start and stop with host, set ip for NTP server
+  10b. services - start ntpd service and tsm-ssh and set to start / stop with host
+  10c. licensing - if using cloud builder skip.  if using VCF after it is deployed pu in the ESXi license
