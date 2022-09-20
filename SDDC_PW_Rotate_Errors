@@ -1,0 +1,12 @@
+Auto Rotate tasks in SDDC manager for vCenter accounts fail with error: "The scheduled auto-rotate workflow could not run due to another operation blocking the resources..."
+Manual rotation also fails with error: Failed to update the password.  Password update task ###-####-####### is in progress / failed state, retry after some time."
+
+1. login to the SDDC manager and switch to root
+2. run the following commands and look for failures:
+  2a. #> psql --host=localhost -U postgres -d operationsmanager select * from passwordmanager.password_operations
+3. take a snapshot of the SDDC manager
+4. run the following commands
+  4a. #> psql --host=localhost -U postgres -d operationsmanager update passwordmanager.password_operations set transaction_status='USER_CANCELLED' where transaction_status='PREVALIDATION_FAILED';
+  4b. #> exit .... or \q
+  4c. #> /opt/vmware/vcf/operationsmanager/scripts/cli/sddcmanager_restart_services.sh
+  4d. #> curl http://localhost/locks | json_pp
