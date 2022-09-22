@@ -10,3 +10,9 @@ Manual rotation also fails with error: Failed to update the password.  Password 
   4b. #> exit .... or \q
   4c. #> /opt/vmware/vcf/operationsmanager/scripts/cli/sddcmanager_restart_services.sh
   4d. #> curl http://localhost/locks | json_pp
+
+you can also try the following commands to remove failed rotation tasks
+#> psql -h localhost -U postgres -d operationsmanager
+#> select transaction_status from passwordmanager.password_operations;
+#> update passwordmanager.password_operations set transaction_status='USER_CANCELLED' where transaction_status='FAILED';
+#> systemctl restart commonsvcs
