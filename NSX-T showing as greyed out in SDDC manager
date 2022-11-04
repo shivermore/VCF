@@ -1,0 +1,11 @@
+NSX-T showed as greyed out in SDDC manager under workload domains > services.  There was nothing wrong with NSX-T and all passwords were current and correct.
+
+
+To fix the NSX-T being unavailable under services tab for the Management Domain and Workload Domain:
+
+#curl localhost/inventory/entities/<entity ID> -X PATCH -d '{"type":"NSXT_CLUSTER","status":"ACTIVE"}' -H 'Content-Type:application/json'
+
+I retrieved the entity ID from the command line since NSX-T cluster information was not available in the SDDC API Explorer:
+#curl localhost/inventory/nsxt | json_pp
+
+Then searched for the respective ID.
