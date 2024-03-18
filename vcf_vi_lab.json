@@ -1,0 +1,292 @@
+# Update SSD Manager "application.properties" to allow "1 NSX VM" + "No Ressource Check"
+#     vcf@sddc-manager [ ~ ]$ su
+#     Password:
+#     
+#     root@sddc-manager [ /home/vcf ]# cd /etc/vmware/vcf/domainmanager/
+#     root@sddc-manager [ /etc/vmware/vcf/domainmanager ]# chmod 644 application.properties
+#     root@sddc-manager [ /etc/vmware/vcf/domainmanager ]# vi application.properties
+#         Add "nsxt.manager.cluster.size=1" + "nsxt.management.resources.validation.skip=true"
+#     root@sddc-manager [ /etc/vmware/vcf/domainmanager ]# chmod 400 application.properties
+#     root@sddc-manager [ /etc/vmware/vcf/domainmanager ]# systemctl restart domainmanager
+# 
+# Find the ESXi ID (under Developer Center - Hosts)
+# Find the clusterImage ID (under Developer Center - Personalities)
+
+
+
+{
+    "domainName": "vi1-paris",
+    "vcenterSpec":
+    {
+        "name": "vcenter-vi1-paris",
+        "networkDetailsSpec":
+        {
+            "ipAddress": "192.168.111.32",
+            "dnsName": "vcenter-vi1-paris.corp.vmbeans.com",
+            "gateway": "192.168.111.1",
+            "subnetMask": "255.255.255.0"
+        },
+        "rootPassword": "VMware1!VMware1!",
+        "datacenterName": "vi1-paris-dc1",
+        "vmSize": "small",
+        "storageSize": "lstorage"
+    },
+    "computeSpec":
+    {
+        "clusterSpecs":
+        [
+            {
+                "name": "vi1-paris-cluster1",
+                "hostSpecs":
+                [
+                    {
+                        "id": "567effa0-93b5-4f3d-b25a-3ac669cbbcb2",
+                        "hostName": "vcf-vi-paris-esx-01.corp.vmbeans.com",
+                        "licenseKey": "114T2-FP355-H8188-0C2HM-30NPK",
+                        "username": "root",
+                        "password": "VMware1!",
+                        "hostNetworkSpec":
+                        {
+                            "vmNics":
+                            [
+                                {
+                                    "id": "vmnic0",
+                                    "uplink": "uplink1",
+                                    "vdsName": "vi1-paris-vds01"
+                                },
+                                {
+                                    "id": "vmnic1",
+                                    "uplink": "uplink2",
+                                    "vdsName": "vi1-paris-vds01"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "e1139a43-7cc3-4ee9-b99f-8b535d8b9e87",
+                        "hostName": "vcf-vi-paris-esx-02.corp.vmbeans.com",
+                        "licenseKey": "114T2-FP355-H8188-0C2HM-30NPK",
+                        "username": "root",
+                        "password": "VMware1!",
+                        "hostNetworkSpec":
+                        {
+                            "vmNics":
+                            [
+                                {
+                                    "id": "vmnic0",
+                                    "uplink": "uplink1",
+                                    "vdsName": "vi1-paris-vds01"
+                                },
+                                {
+                                    "id": "vmnic1",
+                                    "uplink": "uplink2",
+                                    "vdsName": "vi1-paris-vds01"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "f435884c-494f-4ac7-b017-4fd09598b6a4",
+                        "hostName": "vcf-vi-paris-esx-03.corp.vmbeans.com",
+                        "licenseKey": "114T2-FP355-H8188-0C2HM-30NPK",
+                        "username": "root",
+                        "password": "VMware1!",
+                        "hostNetworkSpec":
+                        {
+                            "vmNics":
+                            [
+                                {
+                                    "id": "vmnic0",
+                                    "uplink": "uplink1",
+                                    "vdsName": "vi1-paris-vds01"
+                                },
+                                {
+                                    "id": "vmnic1",
+                                    "uplink": "uplink2",
+                                    "vdsName": "vi1-paris-vds01"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "datastoreSpec":
+                {
+                    "vsanDatastoreSpec":
+                    {
+                        "failuresToTolerate": 1,
+                        "licenseKey": "WJ692-4DY9P-18RN9-0RVHX-09M64",
+                        "datastoreName": "vi1-paris-vsan01",
+                        "dedupAndCompressionEnabled": false
+                    }
+                },
+                "networkSpec":
+                {
+                    "vdsSpecs":
+                    [
+                        {
+                            "name": "vi1-paris-vds01",
+                            "mtu": 1700,
+                            "portGroupSpecs":
+                            [
+                                {
+                                    "name": "vi1-paris-vds01-pg-host",
+                                    "transportType": "MANAGEMENT",
+                                    "activeUplinks":
+                                    [
+                                        "uplink1",
+                                        "uplink2"
+                                    ],
+                                    "standByUplinks":
+                                    [],
+                                    "teamingPolicy": "loadbalance_srcid"
+                                },
+                                {
+                                    "name": "vi1-paris-vds01-pg-vmotion",
+                                    "transportType": "VMOTION",
+                                    "activeUplinks":
+                                    [
+                                        "uplink1",
+                                        "uplink2"
+                                    ],
+                                    "standByUplinks":
+                                    [],
+                                    "teamingPolicy": "loadbalance_srcid"
+                                },
+                                {
+                                    "name": "vi1-paris-vds01-pg-vsan",
+                                    "transportType": "VSAN",
+                                    "activeUplinks":
+                                    [
+                                        "uplink1",
+                                        "uplink2"
+                                    ],
+                                    "standByUplinks":
+                                    [],
+                                    "teamingPolicy": "loadbalance_srcid"
+                                }
+                            ],
+                            "nsxtSwitchConfig":
+                            {
+                                "transportZones":
+                                [
+                                    {
+                                        "name": "vi1-paris-tz-overlay01",
+                                        "transportType": "OVERLAY"
+                                    },
+                                    {
+                                        "name": "vi1-paris-tz-vlan01",
+                                        "transportType": "VLAN"
+                                    }
+                                ],
+                                "hostSwitchOperationalMode": "STANDARD"
+                            }
+                        }
+                    ],
+                    "nsxClusterSpec":
+                    {
+                        "nsxTClusterSpec":
+                        {
+                            "uplinkProfiles":
+                            [
+                                {
+                                    "name": "uplink-profile-2nic",
+                                    "transportVlan": 140,
+                                    "teamings":
+                                    [
+                                        {
+                                            "name": "DEFAULT",
+                                            "policy": "LOADBALANCE_SRCID",
+                                            "activeUplinks":
+                                            [
+                                                "uplink-1",
+                                                "uplink-2"
+                                            ],
+                                            "standByUplinks":
+                                            []
+                                        }
+                                    ]
+                                }
+                            ],
+                            "ipAddressPoolsSpec":
+                            [
+                                {
+                                    "name": "VI1-Paris-TEP-pool1",
+                                    "subnets":
+                                    [
+                                        {
+                                            "ipAddressPoolRanges":
+                                            [
+                                                {
+                                                    "start": "192.168.140.111",
+                                                    "end": "192.168.140.119"
+                                                }
+                                            ],
+                                            "cidr": "192.168.140.0/24",
+                                            "gateway": "192.168.140.1"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "networkProfiles":
+                    [
+                        {
+                            "name": "subconfig1-uplink-profile-2nic",
+                            "isDefault": true,
+                            "nsxtHostSwitchConfigs":
+                            [
+                                {
+                                    "ipAddressPoolName": "VI1-Paris-TEP-pool1",
+                                    "uplinkProfileName": "uplink-profile-2nic",
+                                    "vdsName": "vi1-paris-vds01",
+                                    "vdsUplinkToNsxUplink":
+                                    [
+                                        {
+                                            "vdsUplinkName": "uplink1",
+                                            "nsxUplinkName": "uplink-1"
+                                        },
+                                        {
+                                            "vdsUplinkName": "uplink2",
+                                            "nsxUplinkName": "uplink-2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "advancedOptions":
+                {
+                    "evcMode": "",
+                    "highAvailability":
+                    {
+                        "enabled": true
+                    }
+                },
+                "clusterImageId": "226c711f-f502-40f0-914c-bc36fa614892"
+            }
+        ]
+    },
+    "nsxTSpec":
+    {
+        "nsxManagerSpecs":
+        [
+            {
+                "name": "lm-vi1-paris1",
+                "networkDetailsSpec":
+                {
+                    "ipAddress": "192.168.111.211",
+                    "dnsName": "lm-vi1-paris1.corp.vmbeans.com",
+                    "gateway": "192.168.111.1",
+                    "subnetMask": "255.255.255.0"
+                }
+            }
+        ],
+        "vip": "192.168.111.210",
+        "vipFqdn": "lm-vi1-paris.corp.vmbeans.com",
+        "licenseKey": "W101Y-40LD1-Q8V80-02CRP-3EUMV",
+        "nsxManagerAdminPassword": "VMware1!VMware1!",
+        "formFactor": "medium"
+    }
+}

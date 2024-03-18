@@ -1,0 +1,25 @@
+{
+    "hostsSpec": [
+        {
+            "hostfqdn": "vcf-vi-paris-esx-01.corp.vmbeans.com",
+            "username": "root",
+            "storageType": "VSAN",
+            "password": "VMware1!",
+            "networkPoolName": "wld-network-paris-pool"
+        },
+        {
+            "hostfqdn": "vcf-vi-paris-esx-02.corp.vmbeans.com",
+            "username": "root",
+            "storageType": "VSAN",
+            "password": "VMware1!",
+            "networkPoolName": "wld-network-paris-pool"
+        },
+        {
+            "hostfqdn": "vcf-vi-paris-esx-03.corp.vmbeans.com",
+            "username": "root",
+            "storageType": "VSAN",
+            "password": "VMware1!",
+            "networkPoolName": "wld-network-paris-pool"
+        }
+    ]
+}

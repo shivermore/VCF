@@ -1,0 +1,322 @@
+{
+    "subscriptionLicensing": false,
+    "skipEsxThumbprintValidation": true,
+    "managementPoolName": "wld-network-paris-pool",
+    "sddcManagerSpec":
+    {
+        "secondUserCredentials":
+        {
+            "username": "vcf",
+            "password": "VMware1!VMware1!"
+        },
+        "ipAddress": "192.168.111.170",
+        "hostname": "sddc-manager-paris",
+        "rootUserCredentials":
+        {
+            "username": "root",
+            "password": "VMware1!VMware1!"
+        },
+        "localUserPassword": "VMware1!VMware1!"
+    },
+    "sddcId": "mgt-paris",
+    "esxLicense": "114T2-FP355-H8188-0C2HM-30NPK",
+    "taskName": "workflowconfig/workflowspec-ems.json",
+    "ceipEnabled": false,
+    "fipsEnabled": false,
+    "ntpServers":
+    [
+        "ntp1.eng.vmware.com"
+    ],
+    "dnsSpec":
+    {
+        "subdomain": "corp.vmbeans.com",
+        "domain": "corp.vmbeans.com",
+        "nameserver": "192.168.110.10"
+    },
+    "networkSpecs":
+    [
+        {
+            "networkType": "VM_MANAGEMENT",
+            "subnet": "192.168.111.0/24",
+            "gateway": "192.168.111.1",
+            "vlanId": 111,
+            "mtu": 1500,
+            "portGroupKey": "mgt-paris-vds01-vm",
+            "standbyUplinks":
+            [],
+            "activeUplinks":
+            [
+                "uplink1",
+                "uplink2"
+            ]
+        },
+        {
+            "networkType": "MANAGEMENT",
+            "subnet": "192.168.110.0/24",
+            "gateway": "192.168.110.1",
+            "vlanId": 0,
+            "mtu": 1500,
+            "portGroupKey": "mgt-paris-vds01-host",
+            "standbyUplinks":
+            [],
+            "activeUplinks":
+            [
+                "uplink1",
+                "uplink2"
+            ]
+        },
+        {
+            "networkType": "VMOTION",
+            "subnet": "192.168.120.0/24",
+            "gateway": "192.168.120.1",
+            "vlanId": 120,
+            "mtu": 1500,
+            "portGroupKey": "mgt-paris-vds01-vmotion",
+            "includeIpAddressRanges":
+            [
+                {
+                    "endIpAddress": "192.168.120.109",
+                    "startIpAddress": "192.168.120.101"
+                }
+            ],
+            "standbyUplinks":
+            [],
+            "activeUplinks":
+            [
+                "uplink1",
+                "uplink2"
+            ]
+        },
+        {
+            "networkType": "VSAN",
+            "subnet": "192.168.130.0/24",
+            "gateway": "192.168.130.1",
+            "vlanId": 130,
+            "mtu": 1500,
+            "portGroupKey": "mgt-paris-vds01-vsan",
+            "includeIpAddressRanges":
+            [
+                {
+                    "endIpAddress": "192.168.130.109",
+                    "startIpAddress": "192.168.130.101"
+                }
+            ],
+            "standbyUplinks":
+            [],
+            "activeUplinks":
+            [
+                "uplink1",
+                "uplink2"
+            ]
+        }
+    ],
+    "nsxtSpec":
+    {
+        "nsxtManagerSize": "medium",
+        "nsxtManagers":
+        [
+            {
+                "hostname": "lm-mgt-paris1",
+                "ip": "192.168.111.201"
+            }
+        ],
+        "rootNsxtManagerPassword": "VMware1!VMware1!",
+        "nsxtAdminPassword": "VMware1!VMware1!",
+        "nsxtAuditPassword": "VMware1!VMware1!",
+        "vip": "192.168.111.200",
+        "vipFqdn": "lm-mgt-paris",
+        "nsxtLicense": "W101Y-40LD1-Q8V80-02CRP-3EUMV",
+        "transportVlanId": 140,
+        "ipAddressPoolSpec":
+        {
+            "name": "Mgt-Paris-TEP-pool",
+            "description": "Paris Mgt ESXi Host Overlay TEP IP Pool",
+            "subnets":
+            [
+                {
+                    "ipAddressPoolRanges":
+                    [
+                        {
+                            "start": "192.168.140.101",
+                            "end": "192.168.140.109"
+                        }
+                    ],
+                    "cidr": "192.168.140.0/24",
+                    "gateway": "192.168.140.1"
+                }
+            ]
+        }
+    },
+    "vsanSpec":
+    {
+        "licenseFile": "WJ692-4DY9P-18RN9-0RVHX-09M64",
+        "vsanDedup": "false",
+        "esaConfig":
+        {
+            "enabled": false
+        },
+        "datastoreName": "mgt-paris-vsan01"
+    },
+    "dvsSpecs":
+    [
+        {
+            "dvsName": "mgt-paris-vds01",
+            "vmnics":
+            [
+                "vmnic0",
+                "vmnic1"
+            ],
+            "mtu": 1700,
+            "networks":
+            [
+                "MANAGEMENT",
+                "VM_MANAGEMENT",
+                "VMOTION",
+                "VSAN"
+            ],
+            "niocSpecs":
+            [
+                {
+                    "trafficType": "VSAN",
+                    "value": "HIGH"
+                },
+                {
+                    "trafficType": "VMOTION",
+                    "value": "LOW"
+                },
+                {
+                    "trafficType": "VDP",
+                    "value": "LOW"
+                },
+                {
+                    "trafficType": "VIRTUALMACHINE",
+                    "value": "HIGH"
+                },
+                {
+                    "trafficType": "MANAGEMENT",
+                    "value": "NORMAL"
+                },
+                {
+                    "trafficType": "NFS",
+                    "value": "LOW"
+                },
+                {
+                    "trafficType": "HBR",
+                    "value": "LOW"
+                },
+                {
+                    "trafficType": "FAULTTOLERANCE",
+                    "value": "LOW"
+                },
+                {
+                    "trafficType": "ISCSI",
+                    "value": "LOW"
+                }
+            ],
+            "nsxtSwitchConfig":
+            {
+                "transportZones":
+                [
+                    {
+                        "name": "mgt-paris-tz-overlay01",
+                        "transportType": "OVERLAY"
+                    },
+                    {
+                        "name": "mgt-paris-tz-vlan01",
+                        "transportType": "VLAN"
+                    }
+                ]
+            }
+        }
+    ],
+    "clusterSpec":
+    {
+        "clusterName": "mgt-paris-cluster01",
+        "clusterEvcMode": "",
+        "clusterImageEnabled": true,
+        "vmFolders":
+        {
+            "MANAGEMENT": "mgt-paris-fd-mgt",
+            "NETWORKING": "mgt-paris-fd-nsx",
+            "EDGENODES": "mgt-paris-fd-edge"
+        }
+    },
+    "pscSpecs":
+    [
+        {
+            "adminUserSsoPassword": "VMware1!VMware1!",
+            "pscSsoSpec":
+            {
+                "ssoDomain": "corp.vmbeans.com"
+            }
+        }
+    ],
+    "vcenterSpec":
+    {
+        "vcenterIp": "192.168.111.22",
+        "vcenterHostname": "vcenter-mgt-paris",
+        "licenseFile": "N16R2-DRL81-08UK1-0HAKM-8NW43",
+        "vmSize": "small",
+        "storageSize": "",
+        "rootVcenterPassword": "VMware1!"
+    },
+    "hostSpecs":
+    [
+        {
+            "association": "mgt-paris-datacenter01",
+            "ipAddressPrivate":
+            {
+                "ipAddress": "192.168.110.151"
+            },
+            "hostname": "vcf-mgt-paris-esx-01",
+            "credentials":
+            {
+                "username": "root",
+                "password": "VMware1!"
+            },
+            "vSwitch": "vSwitch0"
+        },
+        {
+            "association": "mgt-paris-datacenter01",
+            "ipAddressPrivate":
+            {
+                "ipAddress": "192.168.110.152"
+            },
+            "hostname": "vcf-mgt-paris-esx-02",
+            "credentials":
+            {
+                "username": "root",
+                "password": "VMware1!"
+            },
+            "vSwitch": "vSwitch0"
+        },
+        {
+            "association": "mgt-paris-datacenter01",
+            "ipAddressPrivate":
+            {
+                "ipAddress": "192.168.110.153"
+            },
+            "hostname": "vcf-mgt-paris-esx-03",
+            "credentials":
+            {
+                "username": "root",
+                "password": "VMware1!"
+            },
+            "vSwitch": "vSwitch0"
+        },
+        {
+            "association": "mgt-paris-datacenter01",
+            "ipAddressPrivate":
+            {
+                "ipAddress": "192.168.110.154"
+            },
+            "hostname": "vcf-mgt-paris-esx-04",
+            "credentials":
+            {
+                "username": "root",
+                "password": "VMware1!"
+            },
+            "vSwitch": "vSwitch0"
+        }
+    ]
+}

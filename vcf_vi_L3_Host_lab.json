@@ -1,0 +1,114 @@
+Hosts in different L3-Racks in the same VI WLD Cluster (so vCenter-Cluster).
+
+Cluster ID = d701ab60-3584-4728-96f6-7bd1c44ca94b
+HOST ID = 3ba405ca-a51c-4cbd-b86d-6ba58cbca09d
+
+PATCH /v1/clusters/d701ab60-3584-4728-96f6-7bd1c44ca94b
+
+I think is not needed
+        "interRackExpansion": true,
+
+
+{
+    "clusterExpansionSpec":
+    {
+        "hostSpecs":
+        [
+            {
+                "id": "3ba405ca-a51c-4cbd-b86d-6ba58cbca09d",
+                "hostName": "vcf-vi-paris-esx-22.corp.vmbeans.com",
+                "licenseKey": "114T2-FP355-H8188-0C2HM-30NPK",
+                "hostNetworkSpec":
+                {
+                    "networkProfileName": "sub-profile-rack3",
+                    "vmNics":
+                    [
+                        {
+                            "id": "vmnic0",
+                            "uplink": "uplink1",
+                            "vdsName": "vi1-paris-vi1-paris-cluster2-vds-01"
+                        },
+                        {
+                            "id": "vmnic1",
+                            "uplink": "uplink2",
+                            "vdsName": "vi1-paris-vi1-paris-cluster2-vds-01"
+                        }
+                    ]
+                }
+            }
+        ],
+        "interRackExpansion": true,
+        "networkSpec":
+        {
+            "networkProfiles":
+            [
+                {
+                    "name": "sub-profile-rack3",
+                    "nsxtHostSwitchConfigs":
+                    [
+                        {
+                            "vdsName": "vi1-paris-vi1-paris-cluster2-vds-01",
+                            "ipAddressPoolName": "VI1-Paris-TEP-pool3",
+                            "uplinkProfileName": "vi1-paris-cluster2-vds-uplink-profile-2",
+                            "vdsUplinkToNsxUplink":
+                            [
+                                {
+                                    "vdsUplinkName": "uplink1",
+                                    "nsxUplinkName": "uplink-1"
+                                },
+                                {
+                                    "vdsUplinkName": "uplink2",
+                                    "nsxUplinkName": "uplink-2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "nsxClusterSpec":
+            {
+                "uplinkProfiles":
+                [
+                    {
+                        "name": "vi1-paris-cluster2-vds-uplink-profile-2",
+                        "transportVlan": 146,
+                        "teamings":
+                        [
+                            {
+                                "name": "DEFAULT",
+                                "policy": "LOADBALANCE_SRCID",
+                                "activeUplinks":
+                                [
+                                    "uplink-1",
+                                    "uplink-2"
+                                ],
+                                "standByUplinks":
+                                []
+                            }
+                        ]
+                    }
+                ],
+                "ipAddressPoolsSpec":
+                [
+                    {
+                        "name": "VI1-Paris-TEP-pool3",
+                        "subnets":
+                        [
+                            {
+                                "ipAddressPoolRanges":
+                                [
+                                    {
+                                        "start": "192.168.146.111",
+                                        "end": "192.168.146.119"
+                                    }
+                                ],
+                                "cidr": "192.168.146.0/24",
+                                "gateway": "192.168.146.1"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
